@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: Screate(),
+      home: SsplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

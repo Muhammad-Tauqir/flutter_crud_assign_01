@@ -36,11 +36,12 @@ class _ScreateState extends State<Screate> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
             title: Center(
                 child: Text(
-              "Todo",
+              "Create Tasks",
               style:
                   TextStyle(fontWeight: FontWeight.w700, color: Colors.white),
             )),
@@ -66,7 +67,21 @@ class _ScreateState extends State<Screate> {
                 SizedBox(
                   height: 10,
                 ),
-                ElevatedButton(onPressed: insertData, child: Text('Submit'))
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                        onPressed: insertData, child: Text('Submit')),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Back'))
+                  ],
+                )
               ],
             ),
           ),
