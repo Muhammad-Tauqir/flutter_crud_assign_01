@@ -45,19 +45,34 @@ class _SshowState extends State<Sshow> {
     }
   }
 
+  void deleteRec(String id) async {
+    try {
+      debugPrint('Deleting item with id: $id');
+      await database().child(id).remove();
+      debugPrint('Item deleted successfully');
+
+      setState(() {
+        _items!.removeWhere((item) => item['key'] == id);
+      });
+    } catch (e) {
+      debugPrint('Error deleting item: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-            leading: 
-              IconButton(
+            leading: IconButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(Icons.arrow_back, color: Colors.white,)
-              ),
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                )),
             title: Center(
                 child: Text(
               "Tasks",
@@ -81,9 +96,26 @@ class _SshowState extends State<Sshow> {
                   child: ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
-                        // trailing: Text(_items![index]['key']),
                         title: Text(_items![index]['title']),
                         subtitle: Text(_items![index]['subtitle']),
+                        trailing: Wrap(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (content) => Screate(_items![index])));
+                                  debugPrint(_items![index].toString());
+                                },
+                                icon: Icon(Icons.edit)),
+                            IconButton(
+                                onPressed: () {
+                                  deleteRec(_items![index]['key']);
+                                },
+                                icon: Icon(Icons.delete))
+                          ],
+                        ),
                       );
                     },
                     itemCount: _items!.length,
@@ -110,13 +142,3 @@ Widget customCard(String inp) {
     ),
   ));
 }
-
-
-
-
-
-// final result = await getData();
-// result!.forEach((key, value) {
-//   debugPrint('Subtitle: ${value['subtitle']}');
-//   debugPrint('Key $key');
-// });

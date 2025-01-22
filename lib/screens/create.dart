@@ -1,18 +1,34 @@
-import 'package:crud/screens/show.dart';
+import 'package:crud/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:crud/helpers/helper.dart';
-import 'package:crud/main.dart';
 
 class Screate extends StatefulWidget {
-  const Screate({super.key});
+  final Map<String, dynamic>? item;
+  const Screate(this.item, {super.key});
 
   @override
   State<Screate> createState() => _ScreateState();
 }
 
 class _ScreateState extends State<Screate> {
-  final TextEditingController _controlTitle = TextEditingController();
-  final TextEditingController _controlSubtitle = TextEditingController();
+  late TextEditingController _controlTitle;
+  late TextEditingController _controlSubtitle;
+  late String heading ; 
+  @override
+  void initState() {
+    super.initState();
+
+    heading = widget.item?['key'] != null ? 'Edit' : 'Create';
+    _controlTitle = TextEditingController(text: widget.item?['title'] ?? '');
+    _controlSubtitle = TextEditingController(text: widget.item?['subtitle'] ?? '');
+  }
+
+  @override
+  void dispose() {
+    _controlTitle.dispose();
+    _controlSubtitle.dispose();
+    super.dispose();
+  }
 
   void insertData() async {
     final [
@@ -21,22 +37,31 @@ class _ScreateState extends State<Screate> {
     ] = [_controlTitle.text.toString(), _controlSubtitle.text.toString()];
 
     if (controlTitle.isNotEmpty && controlSubtitle.isNotEmpty) {
-      try {
-        await database()
-            .push()
-            .set({'title': controlTitle, 'subtitle': controlSubtitle});
-      } catch (error) {
-        debugPrint(error.toString());
+      final data = {'title': controlTitle, 'subtitle': controlSubtitle};
+      final key = widget.item?['key'];
+      if (key != null) {
+        try {
+          await database().child(key).update(data);
+        } catch (e) {
+          debugPrint(e.toString());
+        }
+      } else {
+        try {
+          await database().push().set(data);
+        } catch (error) {
+          debugPrint(error.toString());
+        }
       }
 
       _controlTitle.clear();
       _controlSubtitle.clear();
-      if(mounted){
-        Navigator.pop(context);
+      if (mounted) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Shome()));
       }
     }
   }
 
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,7 +70,7 @@ class _ScreateState extends State<Screate> {
         appBar: AppBar(
             title: Center(
                 child: Text(
-              "Create Tasks",
+              "$heading Tasks",
               style:
                   TextStyle(fontWeight: FontWeight.w700, color: Colors.white),
             )),
@@ -75,8 +100,7 @@ class _ScreateState extends State<Screate> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                        onPressed: insertData,
-                        child: Text('Submit')),
+                        onPressed: insertData, child: Text('Submit')),
                     SizedBox(
                       width: 10,
                     ),

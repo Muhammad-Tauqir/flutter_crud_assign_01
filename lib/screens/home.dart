@@ -40,7 +40,7 @@ class _ShomeState extends State<Shome> {
                     child: InkWell(
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Screate()));
+                        MaterialPageRoute(builder: (context) => Screate(null)));
                   },
                   child: customCard('Create'),
                 )),

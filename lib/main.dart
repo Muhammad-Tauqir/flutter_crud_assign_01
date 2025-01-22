@@ -1,6 +1,3 @@
-import 'package:crud/screens/create.dart';
-import 'package:crud/screens/home.dart';
-import 'package:crud/screens/show.dart';
 import 'package:crud/screens/splash.dart';
 import 'package:flutter/material.dart';
 
