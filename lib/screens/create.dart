@@ -25,10 +25,8 @@ class _ScreateState extends State<Screate> {
         await database()
             .push()
             .set({'title': controlTitle, 'subtitle': controlSubtitle});
-        // return true;
       } catch (error) {
         debugPrint(error.toString());
-        // return false;
       }
 
       _controlTitle.clear();
