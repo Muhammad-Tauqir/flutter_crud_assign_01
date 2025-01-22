@@ -1,4 +1,5 @@
 import 'package:crud/screens/create.dart';
+import 'package:crud/screens/show.dart';
 import 'package:flutter/material.dart';
 import 'package:crud/helpers/helper.dart';
 
@@ -12,7 +13,6 @@ class Shome extends StatefulWidget {
 class _ShomeState extends State<Shome> {
   @override
   Widget build(BuildContext context) {
-    var names = ['1', '2', '3', '4', '5', '6', '7'];
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -32,39 +32,30 @@ class _ShomeState extends State<Shome> {
           decoration: BoxDecoration(
             gradient: bgColor(),
           ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Flexible(
-                    child: 
-                      InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Screate()));
-                      },
-                      child: customCard('Create'),
-                    )
-                  ),
-                  customCard('All'),
-                  customCard('Pending'),
-                  customCard('Complete'),
-                ],
-              ),
-              Flexible(
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      trailing: Text(names[index]),
-                      title: Text('2'),
-                      subtitle: Text('3'),
-                    );
+          child:
+            GridView.count(
+              crossAxisCount: 2,
+              children: [
+                Flexible(
+                    child: InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Screate()));
                   },
-                  itemCount: names.length,
-                ),
-              )
-            ],
-          ),
+                  child: customCard('Create'),
+                )),
+                Flexible(
+                    child: InkWell(
+                    onTap: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Sshow()));
+                    },
+                  child: customCard('All'),
+                )),
+                customCard('Pending'),
+                customCard('Complete'),
+              ],
+            ),
         ),
       ),
     );

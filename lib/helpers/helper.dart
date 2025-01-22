@@ -6,7 +6,7 @@ LinearGradient bgColor() {
 }
 
 dynamic database() {
-  final DatabaseReference database = FirebaseDatabase.instance.ref().child('tasks');
+  final DatabaseReference database = FirebaseDatabase.instance.ref('tasks');
 
   return database;
 }

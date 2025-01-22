@@ -1,3 +1,4 @@
+import 'package:crud/screens/show.dart';
 import 'package:flutter/material.dart';
 import 'package:crud/helpers/helper.dart';
 import 'package:crud/main.dart';
@@ -24,12 +25,17 @@ class _ScreateState extends State<Screate> {
         await database()
             .push()
             .set({'title': controlTitle, 'subtitle': controlSubtitle});
+        // return true;
       } catch (error) {
         debugPrint(error.toString());
+        // return false;
       }
 
       _controlTitle.clear();
       _controlSubtitle.clear();
+      if(mounted){
+        Navigator.pop(context);
+      }
     }
   }
 
@@ -71,7 +77,8 @@ class _ScreateState extends State<Screate> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                        onPressed: insertData, child: Text('Submit')),
+                        onPressed: insertData,
+                        child: Text('Submit')),
                     SizedBox(
                       width: 10,
                     ),

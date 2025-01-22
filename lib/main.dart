@@ -1,5 +1,6 @@
 import 'package:crud/screens/create.dart';
 import 'package:crud/screens/home.dart';
+import 'package:crud/screens/show.dart';
 import 'package:crud/screens/splash.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Splash Screen',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
