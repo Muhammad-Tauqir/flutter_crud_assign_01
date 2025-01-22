@@ -1,11 +1,15 @@
-import 'dart:async';
-
+import 'package:crud/screens/create.dart';
 import 'package:crud/screens/home.dart';
 import 'package:crud/screens/splash.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -25,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: Shome(),
+      home: Screate(),
       debugShowCheckedModeBanner: false,
     );
   }
